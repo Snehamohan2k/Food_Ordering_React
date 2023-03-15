@@ -1,0 +1,87 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="index.js"></script>
+</head>
+<body>
+   Hello
+   <button onclick=button()>Open File</button>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Upload Folder Example</title>
+  </head>
+  <body>
+    <button id="uploadButton">Upload Folder</button>
+
+    <script type="module">
+
+    //   const hashFile = async (file) => {
+    //     const buffer = await file.arrayBuffer();
+    //     const hashVal = CryptoJS.SHA1(CryptoJS.lib.WordArray.create(buffer));
+    //     const hashBase64 = hashVal.toString(CryptoJS.enc.Base64);
+    //     const uuid = uuidv4();
+    //     const path = file.webkitRelativePath;
+    //     const type = file.type;
+    //     const size = file.size;
+
+    //     return { uuid, name: file.name, hash: hashBase64, size, type, path };
+    //   };
+
+      const button = async () => {
+//         const handleUpload = await window.showDirectoryPicker();
+//         const files = await handleUpload.values();
+
+//         const fileData = [];
+//         for await (const entry of files) {
+//           if (entry.kind !== 'file') {
+//             continue;
+//           }
+
+//        //   const { uuid, name, hash, size, type, path } = await hashFile(await file.getFile());
+//  fileData.push(entry.getFile().then((file) => `${file.name} (${file.size})`));
+// }
+
+//         console.log(await Promise.all(fileData));
+
+//         const newFileHandle = await handleUpload.getFileHandle('asset.xml', { create: true });
+//       };
+
+//       const uploadButton = document.getElementById('uploadButton');
+// Obtain a FileSystemFileHandle object for a file
+const files = await window.showDirectoryPicker();
+//const directoryHandle = await window.showDirectoryPicker();
+
+async function getFilePaths(files, path = '') {
+  const files2 = await files.values();
+  for await (const entry of files2) {
+    if (entry.kind === 'file') {
+     
+      const fileName = file.name;
+      const filePath = path ? `${path}/${fileName}` : fileName;
+      console.log(filePath);
+    } else if (entry.kind === 'directory') {
+      const directoryName = entry.name;
+      const directoryPath = path ? `${path}/${directoryName}` : directoryName;
+      await getFilePaths(entry, directoryPath);
+    }
+  }
+}
+
+await getFilePaths(files);
+
+
+      }
+      uploadButton.onclick = button;
+    </script>
+  </body>
+</html>
